@@ -19,7 +19,7 @@ public class Vehicle {
     private String registrationNumber;
     private String make;
     private String model;
-    private int year;
+    private Integer year;
     private String color;
 
     @ManyToOne
@@ -30,7 +30,7 @@ public class Vehicle {
     }
 
     public Vehicle(String registrationNumber, String make,
-                   String model, int year, String color,
+                   String model, Integer year, String color,
                    VehicleOwner owner) {
         this.registrationNumber = registrationNumber;
         this.make = make;

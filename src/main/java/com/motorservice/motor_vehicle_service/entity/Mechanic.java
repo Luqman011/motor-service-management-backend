@@ -19,14 +19,14 @@ public class Mechanic {
     private String phoneNumber;
     private String email;
     private String specialization;
-    private int experienceYears;
+    private Integer experienceYears;
 
     public Mechanic() {
     }
 
     public Mechanic(String firstName, String lastName,
                     String phoneNumber, String email,
-                    String specialization, int experienceYears) {
+                    String specialization, Integer experienceYears) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;

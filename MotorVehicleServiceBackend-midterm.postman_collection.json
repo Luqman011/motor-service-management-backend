@@ -1,0 +1,171 @@
+{
+  "info": {
+    "_postman_id": "35eec8d0-879e-4243-9f5c-8a3e9713073f",
+    "name": "MotorVehicleServiceBackend-midterm",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "7144108"
+  },
+  "item": [
+    {
+      "name": "part A",
+      "item": [
+        {
+          "name": "register car owner",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"luqman\",\n    \"lastName\": \"luke\",\n    \"phoneNumber\": \"0788000000\",\n    \"email\": \"luqman.luke@gmail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/owners",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "owners"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "register vehicle",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"registrationNumber\": \"RAA123A\",\n    \"make\": \"Toyota\",\n    \"model\": \"Corolla\",\n    \"year\": 2022,\n    \"color\": \"White\",\n    \"owner\": {\n        \"id\": \"601ee31c-bcc0-405f-9db6-6969d7716bf4\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/vehicles",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "vehicles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "register mechanic",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Jean\",\n    \"lastName\": \"Claude\",\n    \"phoneNumber\": \"078812345993\",\n    \"email\": \"jean.claude@example.com\",\n    \"specialization\": \"Engine Repair\",\n    \"experienceYears\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/mechanics",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "mechanics"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "regsiter repair job",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"vehicle\": {\n        \"id\": \"f0e866ab-466f-4e40-a3c3-da5d074b368c\"\n    },\n    \"mechanic\": {\n        \"id\": \"6b52feef-9916-48bb-8e23-67fa4ec1c82b\"\n    },\n    \"description\": \"Engine overheating\",\n    \"status\": \"PENDING\",\n    \"startDate\": \"2026-10-31\",\n    \"expectedCompletionDate\": \"2026-11-03\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/repair-jobs",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "repair-jobs"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "spare part registration",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"repairJob\": {\n        \"id\": \"d8b56195-2539-453f-9dc7-1e8ce2b24656\"\n    },\n    \"partName\": \"Oil Filter\",\n    \"description\": \"Engine oil filtration component\",\n    \"quantity\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/spare-parts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "spare-parts"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    }
+  ]
+}
