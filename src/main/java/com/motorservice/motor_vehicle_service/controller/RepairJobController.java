@@ -6,13 +6,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.motorservice.motor_vehicle_service.entity.RepairJob;
+import com.motorservice.motor_vehicle_service.enums.RepairJobStatus;
 import com.motorservice.motor_vehicle_service.service.RepairJobService;
 
 @RestController
@@ -85,24 +88,37 @@ public class RepairJobController {
 
     // Update repair job
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateRepairJob(
-            @PathVariable UUID id,
-            @RequestBody RepairJob repairJob) {
+    public ResponseEntity<String> updateRepairJob(
+        @PathVariable UUID id,
+        @RequestBody RepairJob updatedRepairJob) {
 
-        try {
-            Optional<RepairJob> updatedRepairJob =
-                    repairJobService.updateRepairJob(id, repairJob);
+    Optional<RepairJob> repairJob =
+            repairJobService.updateRepairJob(id, updatedRepairJob);
 
-            if (updatedRepairJob.isPresent()) {
-                return ResponseEntity.ok("Repair job updated successfully");
-            }
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Repair job not found");
-
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    if (repairJob.isPresent()) {
+        return ResponseEntity.ok("Repair job updated successfully");
+    } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Repair job not found");
     }
+}
+
+    //patch repair job status
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<String> updateRepairJobStatus(
+        @PathVariable UUID id,
+        @RequestParam RepairJobStatus status) {
+
+    Optional<RepairJob> repairJob = repairJobService.updateRepairJobStatus(id, status);
+
+    if (repairJob.isPresent()) {
+        return ResponseEntity.ok("Repair job status updated successfully");
+    } else {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Invalid status transition or repair job not found");
+    }
+}
+
 
     // Delete repair job
     @DeleteMapping("/{id}")

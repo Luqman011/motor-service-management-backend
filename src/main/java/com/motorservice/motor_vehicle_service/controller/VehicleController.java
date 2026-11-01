@@ -74,9 +74,18 @@ public ResponseEntity<?> getVehicleById(@PathVariable UUID id) {
         }
     }
 
+    // Retrieve all vehicles by make
+
+    @GetMapping("/make/{make}")
+    public ResponseEntity<List<Vehicle>> getVehiclesByMake(
+        @PathVariable String make) {
+
+    return ResponseEntity.ok(vehicleService.getVehiclesByMake(make));
+}
+
     // Update a vehicle
     @PutMapping("/{id}")
-public ResponseEntity<String> updateVehicle(
+    public ResponseEntity<String> updateVehicle(
         @PathVariable UUID id,
         @RequestBody Vehicle updatedVehicle) {
 

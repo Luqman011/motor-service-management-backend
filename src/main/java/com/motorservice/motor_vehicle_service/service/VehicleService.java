@@ -107,4 +107,8 @@ public class VehicleService {
 
         return false;
     }
+
+    public List<Vehicle> getVehiclesByMake(String make) {
+    return vehicleRepository.findByMakeIgnoreCase(make);
+}
 }

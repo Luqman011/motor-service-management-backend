@@ -81,41 +81,72 @@ public class RepairJobService {
         return repairJobRepository.findByMechanic_Id(mechanicId);
     }
 
-    // Update repair job
-    public Optional<RepairJob> updateRepairJob(UUID id, RepairJob updatedRepairJob) {
+    //update repair job
+    public Optional<RepairJob> updateRepairJob(
+        UUID id, RepairJob updatedRepairJob) {
 
-        Optional<RepairJob> repairJobOptional = repairJobRepository.findById(id);
+    Optional<RepairJob> repairJobOptional =
+            repairJobRepository.findById(id);
 
-        if (repairJobOptional.isPresent()) {
+    if (repairJobOptional.isPresent()) {
 
-            UUID vehicleId = updatedRepairJob.getVehicle().getId();
-            UUID mechanicId = updatedRepairJob.getMechanic().getId();
+        Optional<Vehicle> vehicleOptional =
+                vehicleRepository.findById(updatedRepairJob.getVehicle().getId());
 
-            Optional<Vehicle> vehicleOptional = vehicleRepository.findById(vehicleId);
-            Optional<Mechanic> mechanicOptional = mechanicRepository.findById(mechanicId);
+        Optional<Mechanic> mechanicOptional =
+                mechanicRepository.findById(updatedRepairJob.getMechanic().getId());
 
-            if (vehicleOptional.isEmpty()) {
-                throw new IllegalArgumentException("Vehicle not found");
-            }
-
-            if (mechanicOptional.isEmpty()) {
-                throw new IllegalArgumentException("Mechanic not found");
-            }
-
-            RepairJob existingRepairJob = repairJobOptional.get();
-
-            existingRepairJob.setVehicle(vehicleOptional.get());
-            existingRepairJob.setMechanic(mechanicOptional.get());
-            existingRepairJob.setDescription(updatedRepairJob.getDescription());
-            existingRepairJob.setStatus(updatedRepairJob.getStatus());
-            existingRepairJob.setStartDate(updatedRepairJob.getStartDate());
-            existingRepairJob.setExpectedCompletionDate(updatedRepairJob.getExpectedCompletionDate());
-
-            return Optional.of(repairJobRepository.save(existingRepairJob));
+        if (vehicleOptional.isEmpty() || mechanicOptional.isEmpty()) {
+            return Optional.empty();
         }
 
+        RepairJob repairJob = repairJobOptional.get();
+
+        repairJob.setVehicle(vehicleOptional.get());
+        repairJob.setMechanic(mechanicOptional.get());
+        repairJob.setDescription(updatedRepairJob.getDescription());
+        repairJob.setStartDate(updatedRepairJob.getStartDate());
+        repairJob.setExpectedCompletionDate(updatedRepairJob.getExpectedCompletionDate());
+
+        return Optional.of(repairJobRepository.save(repairJob));
+    }
+
+    return Optional.empty();
+}
+
+    // patch repair job status
+    public Optional<RepairJob> updateRepairJobStatus(
+        UUID id, RepairJobStatus newStatus) {
+
+    Optional<RepairJob> repairJobOptional = repairJobRepository.findById(id);
+
+    if (repairJobOptional.isEmpty()) {
         return Optional.empty();
     }
+
+    RepairJob repairJob = repairJobOptional.get();
+
+    RepairJobStatus currentStatus = repairJob.getStatus();
+
+    if (currentStatus == RepairJobStatus.PENDING) {
+
+        if (newStatus == RepairJobStatus.IN_PROGRESS || newStatus == RepairJobStatus.CANCELLED) {
+
+            repairJob.setStatus(newStatus);
+            return Optional.of(repairJobRepository.save(repairJob));
+        }
+
+    } else if (currentStatus == RepairJobStatus.IN_PROGRESS) {
+
+        if (newStatus == RepairJobStatus.COMPLETED || newStatus == RepairJobStatus.CANCELLED) {
+
+            repairJob.setStatus(newStatus);
+            return Optional.of(repairJobRepository.save(repairJob));
+        }
+    }
+
+    return Optional.empty();
+}
 
     // Delete repair job
     public boolean deleteRepairJob(UUID id) {

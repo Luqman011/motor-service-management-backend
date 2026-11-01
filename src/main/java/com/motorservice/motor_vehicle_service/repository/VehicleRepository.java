@@ -9,8 +9,9 @@ public interface VehicleRepository extends JpaRepository<Vehicle, UUID> {
 
     boolean existsByRegistrationNumber(String registrationNumber);
 
-boolean existsByRegistrationNumberAndIdNot(String registrationNumber, UUID id);
+    boolean existsByRegistrationNumberAndIdNot(String registrationNumber, UUID id);
 
 List<Vehicle> findByOwner_Id(UUID ownerId);
+List<Vehicle> findByMakeIgnoreCase(String make);
 
 }
