@@ -59,6 +59,10 @@ public class MechanicController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Mechanic not found");
     }
 
+    @GetMapping("/without-repair-jobs")
+    public ResponseEntity<List<Mechanic>> getMechanicsWithoutRepairJobs() {
+    return ResponseEntity.ok(mechanicService.getMechanicsWithoutRepairJobs());
+}
     // Update mechanic
     @PutMapping("/{id}")
     public ResponseEntity<?> updateMechanic(

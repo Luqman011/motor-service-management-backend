@@ -74,4 +74,11 @@ public class MechanicService {
 
         return false;
     }
+
+    // find mechanic without repair jobs
+
+    public List<Mechanic> getMechanicsWithoutRepairJobs() {
+    return mechanicRepository.findMechanicsWithoutRepairJobs();
+}
+
 }

@@ -1,9 +1,12 @@
 package com.motorservice.motor_vehicle_service.entity;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,8 +24,14 @@ public class Mechanic {
     private String specialization;
     private Integer experienceYears;
 
+
+    @OneToMany(mappedBy = "mechanic")
+    private List<RepairJob> repairJobs = new ArrayList<>();
+    //empty constructor
     public Mechanic() {
     }
+
+    //parameterized constructor
 
     public Mechanic(String firstName, String lastName,
                     String phoneNumber, String email,
