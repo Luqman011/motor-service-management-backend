@@ -51,4 +51,8 @@ public class RepairReportService {
     return repairReportRepository.findById(id);
 }
 
+    public List<RepairReport> getRepairReportsByOwner(UUID ownerId) {
+    return repairReportRepository.findRepairReportsByOwner(ownerId);
+}
+
 }

@@ -50,4 +50,11 @@ public class RepairReportController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Repair report not found");
         }
     }
+
+    @GetMapping("/owner/{ownerId}")
+    public ResponseEntity<List<RepairReport>> getRepairReportsByOwner(
+        @PathVariable UUID ownerId) {
+
+    return ResponseEntity.ok(repairReportService.getRepairReportsByOwner(ownerId));
+}
 }
