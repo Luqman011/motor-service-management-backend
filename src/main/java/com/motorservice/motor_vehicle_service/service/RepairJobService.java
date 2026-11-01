@@ -198,6 +198,7 @@ public class RepairJobService {
     return repairJobRepository.findByStartDateBetween(startDate, endDate);
 }
 
-    
-
+    public List<Object[]> countRepairJobsByStatus() {
+    return repairJobRepository.countRepairJobsByStatus();
+}
 }

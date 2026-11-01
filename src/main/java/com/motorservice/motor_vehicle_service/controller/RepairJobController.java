@@ -111,6 +111,12 @@ public class RepairJobController {
             repairJobService.getRepairJobsByDateRange(start, end));
 }
 
+    @GetMapping("/reports/status-count")
+    public ResponseEntity<List<Object[]>> countRepairJobsByStatus() {
+
+    return ResponseEntity.ok(repairJobService.countRepairJobsByStatus());
+}
+
     // Update repair job
     @PutMapping("/{id}")
     public ResponseEntity<String> updateRepairJob(
