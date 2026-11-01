@@ -134,6 +134,23 @@ public class RepairJobController {
     }
 }
 
+    // Update repair job status bulk update
+
+    @PutMapping("/bulk-cancel")
+    public ResponseEntity<String> cancelPendingJobsByMechanicAndDate(
+        @RequestParam UUID mechanicId,
+        @RequestParam LocalDate startDate) {
+
+    int updatedCount = repairJobService.cancelPendingJobsByMechanicAndDate(mechanicId, startDate);
+
+    if (updatedCount > 0) {
+        return ResponseEntity.ok(updatedCount + " repair job(s) cancelled successfully");
+    } else {
+        return ResponseEntity.ok("No pending repair jobs found for this mechanic and date");
+    }
+}
+
+
     //patch repair job status
 
     @PatchMapping("/{id}/status")

@@ -201,4 +201,16 @@ public class RepairJobService {
     public List<Object[]> countRepairJobsByStatus() {
     return repairJobRepository.countRepairJobsByStatus();
 }
+
+
+    public int cancelPendingJobsByMechanicAndDate(
+        UUID mechanicId, LocalDate startDate) {
+
+    return repairJobRepository.updateRepairJobsStatus(
+            mechanicId,
+            startDate,
+            RepairJobStatus.PENDING,
+            RepairJobStatus.CANCELLED
+    );
+}
 }
