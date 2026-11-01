@@ -103,7 +103,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"vehicle\": {\n        \"id\": \"f0e866ab-466f-4e40-a3c3-da5d074b368c\"\n    },\n    \"mechanic\": {\n        \"id\": \"6b52feef-9916-48bb-8e23-67fa4ec1c82b\"\n    },\n    \"description\": \"Engine overheating\",\n    \"status\": \"PENDING\",\n    \"startDate\": \"2026-10-31\",\n    \"expectedCompletionDate\": \"2026-11-03\"\n}",
+              "raw": "{\n    \"vehicle\": {\n        \"id\": \"f0e866ab-466f-4e40-a3c3-da5d074b368c\"\n    },\n    \"mechanic\": {\n        \"id\": \"c3192cc7-6340-46f3-94cb-473ae57b8df3\"\n    },\n    \"description\": \"CHANGE TYRES\",\n    \"status\": \"PENDING\",\n    \"startDate\": \"2026-11-10\",\n    \"expectedCompletionDate\": \"2026-11-20\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -157,12 +157,385 @@
       ]
     },
     {
-      "name": "New Request",
+      "name": "PART B",
+      "item": [
+        {
+          "name": "search vehicle by make",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search repair jobs by status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/repair-jobs/status/IN_PROGRESS",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "repair-jobs",
+                "status",
+                "IN_PROGRESS"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "search repair jobs by date range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/repair-jobs/date-range?startDate=2026-10-01&endDate=2026-11-30",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "repair-jobs",
+                "date-range"
+              ],
+              "query": [
+                {
+                  "key": "startDate",
+                  "value": "2026-10-01"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2026-11-30"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "search vehicle owner by make",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/owners/vehicle-make/toyota",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "owners",
+                "vehicle-make",
+                "toyota"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "vehicle with no repair jobs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/vehicles/without-repair-jobs",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "vehicles",
+                "without-repair-jobs"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mechanic without repair jobs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/mechanics/without-repair-jobs",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "mechanics",
+                "without-repair-jobs"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create repair report",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Engine Repair Report\",\n    \"description\": \"Engine oil leak repaired and tested successfully\",\n    \"repairJob\": {\n        \"id\": \"d8b56195-2539-453f-9dc7-1e8ce2b24656\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/repair-reports",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "repair-reports"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "retrieve all repair reports",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/repair-reports",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "repair-reports"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "find report by vehicle owner",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/repair-reports/owner/601ee31c-bcc0-405f-9db6-6969d7716bf4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "repair-reports",
+                "owner",
+                "601ee31c-bcc0-405f-9db6-6969d7716bf4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "count repair jobs by status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/repair-jobs/reports/status-count",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "repair-jobs",
+                "reports",
+                "status-count"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "repair jobs bulk cancel",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/repair-jobs/bulk-cancel?mechanicId=6b52feef-9916-48bb-8e23-67fa4ec1c82b&startDate=2026-11-01",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "repair-jobs",
+                "bulk-cancel"
+              ],
+              "query": [
+                {
+                  "key": "mechanicId",
+                  "value": "6b52feef-9916-48bb-8e23-67fa4ec1c82b"
+                },
+                {
+                  "key": "startDate",
+                  "value": "2026-11-01"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "dashboard summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/dashboard/summary",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "dashboard",
+                "summary"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "find car owners with pagination",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/owners/paginated?page=0&size=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "owners",
+                "paginated"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "http://localhost:8080/api/dashboard",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "dashboard"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update repair job status",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/repair-jobs/d8b56195-2539-453f-9dc7-1e8ce2b24656/status?status=IN_PROGRESS",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "repair-jobs",
+            "d8b56195-2539-453f-9dc7-1e8ce2b24656",
+            "status"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "IN_PROGRESS"
+            }
+          ]
         }
       },
       "response": []
