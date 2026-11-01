@@ -38,6 +38,9 @@ public class RepairJobController {
     } catch (IllegalArgumentException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
+    catch (IllegalStateException e) {
+    return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+}
 }
 
     // Get all repair jobs

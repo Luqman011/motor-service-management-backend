@@ -45,10 +45,20 @@ public class RepairJobService {
         if (mechanicOptional.isEmpty()) {
             throw new IllegalArgumentException("Mechanic not found");
         }
-        
+
         if (repairJob.getStartDate().isBefore(LocalDate.now())) {
         throw new IllegalArgumentException("Repair job start date cannot be in the past");
     }
+
+    boolean mechanicHasActiveJob = repairJobRepository.existsByMechanic_IdAndStartDateAndStatusNot(
+                repairJob.getMechanic().getId(),
+                repairJob.getStartDate(),
+                RepairJobStatus.CANCELLED
+        );
+
+    if (mechanicHasActiveJob) {
+    throw new IllegalStateException( "Mechanic already has an active repair job on this date");
+}
 
         repairJob.setVehicle(vehicleOptional.get());
         repairJob.setMechanic(mechanicOptional.get());
@@ -174,5 +184,7 @@ public class RepairJobService {
 
     return repairJobRepository.findByStartDateBetween(startDate, endDate);
 }
+
+    
 
 }

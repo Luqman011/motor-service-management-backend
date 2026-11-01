@@ -14,4 +14,7 @@ public interface RepairJobRepository extends JpaRepository<RepairJob, UUID> {
     List<RepairJob> findByStatusOrderByStartDateAsc(RepairJobStatus status);
     List<RepairJob> findByStartDateBetween(LocalDate startDate, LocalDate endDate);
 
+
+    boolean existsByMechanic_IdAndStartDateAndStatusNot(UUID mechanicId, LocalDate startDate, RepairJobStatus status);
+
 }
