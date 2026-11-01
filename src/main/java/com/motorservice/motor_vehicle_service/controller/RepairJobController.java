@@ -86,6 +86,14 @@ public class RepairJobController {
         }
     }
 
+    // Get repair jobs by status
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<RepairJob>> getRepairJobsByStatus(
+        @PathVariable RepairJobStatus status) {
+
+    return ResponseEntity.ok(repairJobService.getRepairJobsByStatus(status));
+}
+
     // Update repair job
     @PutMapping("/{id}")
     public ResponseEntity<String> updateRepairJob(

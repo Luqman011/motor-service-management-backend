@@ -160,4 +160,10 @@ public class RepairJobService {
 
         return false;
     }
+
+
+    public List<RepairJob> getRepairJobsByStatus(RepairJobStatus status) {
+    return repairJobRepository.findByStatusOrderByStartDateAsc(status);
+}
+
 }
