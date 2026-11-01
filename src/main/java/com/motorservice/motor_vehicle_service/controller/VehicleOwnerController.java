@@ -36,7 +36,7 @@ public class VehicleOwnerController {
 
     // Retrieve all vehicle owners
    @GetMapping
-public ResponseEntity<List<VehicleOwner>> getAllOwners() {
+    public ResponseEntity<List<VehicleOwner>> getAllOwners() {
 
     List<VehicleOwner> owners = vehicleOwnerService.getAllOwners();
 
@@ -46,7 +46,7 @@ public ResponseEntity<List<VehicleOwner>> getAllOwners() {
 
     // Retrieve one vehicle owner by ID
    @GetMapping("/{id}")
-public ResponseEntity<?> getOwnerById(@PathVariable UUID id) {
+    public ResponseEntity<?> getOwnerById(@PathVariable UUID id) {
 
     Optional<VehicleOwner> ownerOptional = vehicleOwnerService.getOwnerById(id);
 
@@ -57,9 +57,16 @@ public ResponseEntity<?> getOwnerById(@PathVariable UUID id) {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehicle owner not found");
 }
 
+    @GetMapping("/vehicle-make/{make}")
+    public ResponseEntity<List<VehicleOwner>> getOwnersByVehicleMake(
+        @PathVariable String make) {
+
+    return ResponseEntity.ok(vehicleOwnerService.getOwnersByVehicleMake(make));
+}
+
     // Update a vehicle owner
     @PutMapping("/{id}")
-public ResponseEntity<String> updateOwner(
+    public ResponseEntity<String> updateOwner(
         @PathVariable UUID id,
         @RequestBody VehicleOwner updatedOwner) {
 

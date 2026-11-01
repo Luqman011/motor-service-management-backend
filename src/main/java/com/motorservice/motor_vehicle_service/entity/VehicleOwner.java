@@ -5,6 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.List;
+import java.util.ArrayList;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "vehicle_owners")
@@ -19,13 +24,15 @@ public class VehicleOwner {
     private String phoneNumber;
     private String email;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "owner")
+    private List<Vehicle> vehicles = new ArrayList<>();
     // Default constructor
     public VehicleOwner() {
     }
 
     // Parameterized constructor
-    public VehicleOwner(String firstName, String lastName,
-                        String phoneNumber, String email) {
+    public VehicleOwner(String firstName, String lastName, String phoneNumber, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;

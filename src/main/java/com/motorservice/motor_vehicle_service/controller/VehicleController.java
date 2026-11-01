@@ -83,6 +83,13 @@ public ResponseEntity<?> getVehicleById(@PathVariable UUID id) {
     return ResponseEntity.ok(vehicleService.getVehiclesByMake(make));
 }
 
+    // Retrieve all vehicles without repair jobs
+
+    @GetMapping("/without-repair-jobs")
+    public ResponseEntity<List<Vehicle>> getVehiclesWithoutRepairJobs() {
+    return ResponseEntity.ok(vehicleService.getVehiclesWithoutRepairJobs());
+}
+
     // Update a vehicle
     @PutMapping("/{id}")
     public ResponseEntity<String> updateVehicle(

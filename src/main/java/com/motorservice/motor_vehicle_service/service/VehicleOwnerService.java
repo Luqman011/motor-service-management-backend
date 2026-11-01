@@ -77,4 +77,8 @@ public class VehicleOwnerService {
 
         return false;
     }
+
+    public List<VehicleOwner> getOwnersByVehicleMake(String make) {
+    return vehicleOwnerRepository.findOwnersByVehicleMake(make);
+}
 }

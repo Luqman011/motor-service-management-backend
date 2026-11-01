@@ -111,4 +111,8 @@ public class VehicleService {
     public List<Vehicle> getVehiclesByMake(String make) {
     return vehicleRepository.findByMakeIgnoreCase(make);
 }
+
+    public List<Vehicle> getVehiclesWithoutRepairJobs() {
+    return vehicleRepository.findVehiclesWithoutRepairJobs();
+}
 }
