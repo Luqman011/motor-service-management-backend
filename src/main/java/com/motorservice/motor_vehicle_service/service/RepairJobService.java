@@ -3,6 +3,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.motorservice.motor_vehicle_service.entity.Mechanic;
 import com.motorservice.motor_vehicle_service.entity.RepairJob;
@@ -10,6 +12,7 @@ import com.motorservice.motor_vehicle_service.entity.Vehicle;
 import com.motorservice.motor_vehicle_service.enums.RepairJobStatus;
 import com.motorservice.motor_vehicle_service.repository.MechanicRepository;
 import com.motorservice.motor_vehicle_service.repository.RepairJobRepository;
+import com.motorservice.motor_vehicle_service.repository.RepairReportRepository;
 import com.motorservice.motor_vehicle_service.repository.VehicleRepository;
 
 @Service
@@ -18,6 +21,9 @@ public class RepairJobService {
     private final RepairJobRepository repairJobRepository;
     private final VehicleRepository vehicleRepository;
     private final MechanicRepository mechanicRepository;
+
+    @Autowired
+    private RepairReportRepository repairReportRepository;
 
     public RepairJobService(
             RepairJobRepository repairJobRepository,
@@ -163,17 +169,24 @@ public class RepairJobService {
 }
 
     // Delete repair job
-    public boolean deleteRepairJob(UUID id) {
+    public String deleteRepairJob(UUID id) {
 
-        Optional<RepairJob> repairJobOptional = repairJobRepository.findById(id);
+    Optional<RepairJob> repairJobOptional = repairJobRepository.findById(id);
 
-        if (repairJobOptional.isPresent()) {
-            repairJobRepository.delete(repairJobOptional.get());
-            return true;
-        }
-
-        return false;
+    if (repairJobOptional.isEmpty()) {
+        return "Repair job not found";
     }
+
+    boolean hasReports = repairReportRepository.existsByRepairJob_Id(id);
+
+    if (hasReports) {
+        return "Cannot delete repair job because reports exist";
+    }
+
+    repairJobRepository.deleteById(id);
+
+    return "Repair job deleted successfully";
+}
 
 
     public List<RepairJob> getRepairJobsByStatus(RepairJobStatus status) {

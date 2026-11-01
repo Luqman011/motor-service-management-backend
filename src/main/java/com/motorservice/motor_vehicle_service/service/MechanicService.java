@@ -2,6 +2,7 @@ package com.motorservice.motor_vehicle_service.service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.motorservice.motor_vehicle_service.entity.Mechanic;
 import com.motorservice.motor_vehicle_service.repository.MechanicRepository;
@@ -9,7 +10,9 @@ import com.motorservice.motor_vehicle_service.repository.MechanicRepository;
 @Service
 public class MechanicService {
 
+    @Autowired 
     private final MechanicRepository mechanicRepository;
+
 
     public MechanicService(MechanicRepository mechanicRepository) {
         this.mechanicRepository = mechanicRepository;
@@ -80,5 +83,6 @@ public class MechanicService {
     public List<Mechanic> getMechanicsWithoutRepairJobs() {
     return mechanicRepository.findMechanicsWithoutRepairJobs();
 }
+    
 
 }

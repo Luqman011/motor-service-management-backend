@@ -147,14 +147,16 @@ public class RepairJobController {
 
     // Delete repair job
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteRepairJob(@PathVariable UUID id) {
+public ResponseEntity<String> deleteRepairJob(@PathVariable UUID id) {
 
-        boolean deleted = repairJobService.deleteRepairJob(id);
+    String result = repairJobService.deleteRepairJob(id);
 
-        if (deleted) {
-            return ResponseEntity.ok("Repair job deleted successfully");
-        }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Repair job not found");
+    if (result.equals("Repair job not found")) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+    } else if (result.equals("Cannot delete repair job because reports exist")) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(result);
+    } else {
+        return ResponseEntity.ok(result);
     }
+}
 }
