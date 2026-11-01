@@ -1,4 +1,5 @@
 package com.motorservice.motor_vehicle_service.service;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -164,6 +165,11 @@ public class RepairJobService {
 
     public List<RepairJob> getRepairJobsByStatus(RepairJobStatus status) {
     return repairJobRepository.findByStatusOrderByStartDateAsc(status);
+}
+
+    public List<RepairJob> getRepairJobsByDateRange(LocalDate startDate, LocalDate endDate) {
+
+    return repairJobRepository.findByStartDateBetween(startDate, endDate);
 }
 
 }

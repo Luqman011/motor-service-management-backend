@@ -1,4 +1,5 @@
 package com.motorservice.motor_vehicle_service.controller;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -92,6 +93,23 @@ public class RepairJobController {
         @PathVariable RepairJobStatus status) {
 
     return ResponseEntity.ok(repairJobService.getRepairJobsByStatus(status));
+}
+
+    // Get repair jobs by date range
+    @GetMapping("/date-range")
+    public ResponseEntity<List<RepairJob>> getRepairJobsByDateRange(
+        @RequestParam String startDate,
+        @RequestParam String endDate) {
+
+    LocalDate start = LocalDate.parse(startDate);
+    LocalDate end = LocalDate.parse(endDate);
+
+    if (start.isAfter(end)) {
+        return ResponseEntity.badRequest().build();
+    }
+
+    return ResponseEntity.ok(
+            repairJobService.getRepairJobsByDateRange(start, end));
 }
 
     // Update repair job
