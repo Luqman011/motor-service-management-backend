@@ -31,18 +31,14 @@ public class RepairJobController {
 
     // Register repair job
     @PostMapping
-    public ResponseEntity<?> saveRepairJob(@RequestBody RepairJob repairJob) {
-
-        try {
-            repairJobService.saveRepairJob(repairJob);
-
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body("Repair job registered successfully");
-
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<String> saveRepairJob(@RequestBody RepairJob repairJob) {
+    try {
+        repairJobService.saveRepairJob(repairJob);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Repair job created successfully");
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
+}
 
     // Get all repair jobs
     @GetMapping

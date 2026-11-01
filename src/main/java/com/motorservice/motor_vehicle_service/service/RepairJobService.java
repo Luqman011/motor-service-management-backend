@@ -45,6 +45,10 @@ public class RepairJobService {
         if (mechanicOptional.isEmpty()) {
             throw new IllegalArgumentException("Mechanic not found");
         }
+        
+        if (repairJob.getStartDate().isBefore(LocalDate.now())) {
+        throw new IllegalArgumentException("Repair job start date cannot be in the past");
+    }
 
         repairJob.setVehicle(vehicleOptional.get());
         repairJob.setMechanic(mechanicOptional.get());
@@ -126,7 +130,6 @@ public class RepairJobService {
     }
 
     RepairJob repairJob = repairJobOptional.get();
-
     RepairJobStatus currentStatus = repairJob.getStatus();
 
     if (currentStatus == RepairJobStatus.PENDING) {
