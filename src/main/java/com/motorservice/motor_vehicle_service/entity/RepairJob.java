@@ -8,6 +8,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import com.motorservice.motor_vehicle_service.enums.RepairJobStatus;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
 @Table(name = "repair_jobs")
@@ -27,7 +30,8 @@ public class RepairJob {
 
     private String description;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private RepairJobStatus status;
 
     private LocalDate startDate;
 
@@ -37,7 +41,7 @@ public class RepairJob {
     }
 
     public RepairJob(Vehicle vehicle, Mechanic mechanic,
-                     String description, String status,
+                     String description, RepairJobStatus status,
                      LocalDate startDate, LocalDate expectedCompletionDate) {
         this.vehicle = vehicle;
         this.mechanic = mechanic;
@@ -81,13 +85,13 @@ public class RepairJob {
         this.description = description;
     }
 
-    public String getStatus() {
-        return status;
-    }
+    public RepairJobStatus getStatus() {
+    return status;
+}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public void setStatus(RepairJobStatus status) {
+    this.status = status;
+}
 
     public LocalDate getStartDate() {
         return startDate;

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.motorservice.motor_vehicle_service.entity.Mechanic;
 import com.motorservice.motor_vehicle_service.entity.RepairJob;
 import com.motorservice.motor_vehicle_service.entity.Vehicle;
+import com.motorservice.motor_vehicle_service.enums.RepairJobStatus;
 import com.motorservice.motor_vehicle_service.repository.MechanicRepository;
 import com.motorservice.motor_vehicle_service.repository.RepairJobRepository;
 import com.motorservice.motor_vehicle_service.repository.VehicleRepository;
@@ -46,7 +47,7 @@ public class RepairJobService {
 
         repairJob.setVehicle(vehicleOptional.get());
         repairJob.setMechanic(mechanicOptional.get());
-
+        repairJob.setStatus(RepairJobStatus.PENDING);
         return repairJobRepository.save(repairJob);
     }
 
@@ -108,8 +109,7 @@ public class RepairJobService {
             existingRepairJob.setDescription(updatedRepairJob.getDescription());
             existingRepairJob.setStatus(updatedRepairJob.getStatus());
             existingRepairJob.setStartDate(updatedRepairJob.getStartDate());
-            existingRepairJob.setExpectedCompletionDate(
-                    updatedRepairJob.getExpectedCompletionDate());
+            existingRepairJob.setExpectedCompletionDate(updatedRepairJob.getExpectedCompletionDate());
 
             return Optional.of(repairJobRepository.save(existingRepairJob));
         }

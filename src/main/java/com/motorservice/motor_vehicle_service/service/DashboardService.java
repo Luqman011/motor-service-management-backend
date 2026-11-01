@@ -1,6 +1,7 @@
 package com.motorservice.motor_vehicle_service.service;
 import com.motorservice.motor_vehicle_service.entity.Dashboard;
 import com.motorservice.motor_vehicle_service.entity.RepairJob;
+import com.motorservice.motor_vehicle_service.enums.RepairJobStatus;
 import com.motorservice.motor_vehicle_service.repository.VehicleOwnerRepository;
 import com.motorservice.motor_vehicle_service.repository.VehicleRepository;
 import com.motorservice.motor_vehicle_service.repository.MechanicRepository;
@@ -50,17 +51,17 @@ public class DashboardService {
         // Count jobs according to their status
         for (RepairJob repairJob : repairJobs) {
 
-            if ("PENDING".equalsIgnoreCase(repairJob.getStatus())) {
-                pendingJobs++;
-            }
+            if (repairJob.getStatus() == RepairJobStatus.PENDING) {
+            pendingJobs++;
+}
 
-            if ("IN_PROGRESS".equalsIgnoreCase(repairJob.getStatus())) {
-                inProgressJobs++;
-            }
+            if (repairJob.getStatus() == RepairJobStatus.IN_PROGRESS) {
+            inProgressJobs++;
+}
 
-            if ("COMPLETED".equalsIgnoreCase(repairJob.getStatus())) {
-                completedJobs++;
-            }
+            if (repairJob.getStatus() == RepairJobStatus.COMPLETED) {
+            completedJobs++;
+}
         }
 
         dashboard.setPendingJobs(pendingJobs);
