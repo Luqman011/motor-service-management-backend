@@ -40,28 +40,30 @@ public class VehicleOwnerService {
     }
 
     // Update a vehicle owner
-    public Optional<VehicleOwner> updateOwner(
-            UUID id, VehicleOwner updatedOwner) {
+    public Optional<VehicleOwner> updateOwner(UUID id, VehicleOwner updatedOwner) {
 
-        Optional<VehicleOwner> ownerOptional =
-                vehicleOwnerRepository.findById(id);
+    Optional<VehicleOwner> existingOwner = vehicleOwnerRepository.findById(id);
 
-        if (ownerOptional.isPresent()) {
+    if (existingOwner.isPresent()) {
 
-            VehicleOwner existingOwner = ownerOptional.get();
+        if (vehicleOwnerRepository.existsByPhoneNumberAndIdNot(
+                updatedOwner.getPhoneNumber(), id)) {
 
-            existingOwner.setFirstName(updatedOwner.getFirstName());
-            existingOwner.setLastName(updatedOwner.getLastName());
-            existingOwner.setPhoneNumber(updatedOwner.getPhoneNumber());
-            existingOwner.setEmail(updatedOwner.getEmail());
-
-            return Optional.of(
-                    vehicleOwnerRepository.save(existingOwner)
-            );
+            throw new IllegalStateException("Vehicle owner phone number already exists");
         }
 
+        VehicleOwner owner = existingOwner.get();
+        owner.setFirstName(updatedOwner.getFirstName());
+        owner.setLastName(updatedOwner.getLastName());
+        owner.setPhoneNumber(updatedOwner.getPhoneNumber());
+        owner.setEmail(updatedOwner.getEmail());
+
+        return Optional.of(vehicleOwnerRepository.save(owner));
+
+    } else {
         return Optional.empty();
     }
+}
 
     // Delete a vehicle owner
     public boolean deleteOwner(UUID id) {

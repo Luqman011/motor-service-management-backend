@@ -37,6 +37,14 @@ public ResponseEntity<String> saveVehicle(
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 }
+
+
+    // Get all vehicles
+    @GetMapping
+    public ResponseEntity<List<Vehicle>> getAllVehicles() {
+        return ResponseEntity.ok(vehicleService.getAllVehicles());
+    }
+
     // Retrieve all vehicles
     @GetMapping("/{id}")
 public ResponseEntity<?> getVehicleById(@PathVariable UUID id) {

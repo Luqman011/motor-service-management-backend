@@ -54,23 +54,27 @@ public ResponseEntity<?> getOwnerById(@PathVariable UUID id) {
         return ResponseEntity.ok(ownerOptional.get());
     }
 
-    return ResponseEntity.status(HttpStatus.NOT_FOUND)
-            .body("Vehicle owner not found");
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehicle owner not found");
 }
 
     // Update a vehicle owner
     @PutMapping("/{id}")
 public ResponseEntity<String> updateOwner(
         @PathVariable UUID id,
-        @RequestBody VehicleOwner vehicleOwner) {
+        @RequestBody VehicleOwner updatedOwner) {
 
-    boolean updated = vehicleOwnerService.updateOwner(id, vehicleOwner).isPresent();
+    try {
+        Optional<VehicleOwner> owner = vehicleOwnerService.updateOwner(id, updatedOwner);
 
-    if (updated) {
-        return ResponseEntity.ok( "Vehicle owner updated successfully");
+        if (owner.isPresent()) {
+            return ResponseEntity.ok("Vehicle owner updated successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehicle owner not found");
+        }
+
+    } catch (IllegalStateException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
-
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehicle owner not found. Update failed");
 }
 
     // Delete a vehicle owner
