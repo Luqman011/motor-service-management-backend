@@ -37,4 +37,6 @@ public interface RepairJobRepository extends JpaRepository<RepairJob, UUID> {
         @Param("startDate") LocalDate startDate,
         @Param("currentStatus") RepairJobStatus currentStatus,
         @Param("newStatus") RepairJobStatus newStatus);
+
+        long countByStatus(RepairJobStatus status);
 }

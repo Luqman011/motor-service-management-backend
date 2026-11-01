@@ -3,8 +3,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Pageable;
 import com.motorservice.motor_vehicle_service.entity.VehicleOwner;
 import com.motorservice.motor_vehicle_service.repository.VehicleOwnerRepository;
 
@@ -80,5 +82,13 @@ public class VehicleOwnerService {
 
     public List<VehicleOwner> getOwnersByVehicleMake(String make) {
     return vehicleOwnerRepository.findOwnersByVehicleMake(make);
+}
+
+
+    public Page<VehicleOwner> getOwnersPaginated(int page, int size) {
+
+    Pageable pageable = PageRequest.of(page, size);
+
+    return vehicleOwnerRepository.findAll(pageable);
 }
 }

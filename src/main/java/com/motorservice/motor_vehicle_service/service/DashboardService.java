@@ -6,12 +6,17 @@ import com.motorservice.motor_vehicle_service.repository.VehicleOwnerRepository;
 import com.motorservice.motor_vehicle_service.repository.VehicleRepository;
 import com.motorservice.motor_vehicle_service.repository.MechanicRepository;
 import com.motorservice.motor_vehicle_service.repository.RepairJobRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DashboardService {
 
+    @Autowired 
     private final VehicleOwnerRepository vehicleOwnerRepository;
     private final VehicleRepository vehicleRepository;
     private final MechanicRepository mechanicRepository;
@@ -70,4 +75,29 @@ public class DashboardService {
 
         return dashboard;
     }
+
+
+    public Map<String, Long> getDashboardSummary() {
+
+    Map<String, Long> dashboard = new HashMap<>();
+
+    dashboard.put("totalOwners", vehicleOwnerRepository.count());
+    dashboard.put("totalVehicles", vehicleRepository.count());
+    dashboard.put("totalMechanics", mechanicRepository.count());
+    dashboard.put("totalRepairJobs", repairJobRepository.count());
+
+    dashboard.put("pendingJobs",
+            repairJobRepository.countByStatus(RepairJobStatus.PENDING));
+
+    dashboard.put("inProgressJobs",
+            repairJobRepository.countByStatus(RepairJobStatus.IN_PROGRESS));
+
+    dashboard.put("completedJobs",
+            repairJobRepository.countByStatus(RepairJobStatus.COMPLETED));
+
+    dashboard.put("cancelledJobs",
+            repairJobRepository.countByStatus(RepairJobStatus.CANCELLED));
+
+    return dashboard;
+}
 }

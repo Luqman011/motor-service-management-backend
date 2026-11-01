@@ -3,6 +3,8 @@ package com.motorservice.motor_vehicle_service.controller;
 import java.util.List;
 import java.util.UUID;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -95,6 +97,19 @@ public class VehicleOwnerController {
     }
 
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehicle owner not found. Deletion failed");
+}
+
+
+
+    // Retrieve all vehicle owners with pagination
+    
+    @GetMapping("/paginated")
+    public ResponseEntity<Page<VehicleOwner>> getOwnersPaginated(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "5") int size) {
+
+    return ResponseEntity.ok(
+            vehicleOwnerService.getOwnersPaginated(page, size));
 }
     
 }

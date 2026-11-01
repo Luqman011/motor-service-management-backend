@@ -1,6 +1,9 @@
 package com.motorservice.motor_vehicle_service.controller;
 import com.motorservice.motor_vehicle_service.entity.Dashboard;
 import com.motorservice.motor_vehicle_service.service.DashboardService;
+
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,4 +26,10 @@ public class DashboardController {
 
         return ResponseEntity.ok(dashboard);
     }
+
+    @GetMapping("/summary")
+    public ResponseEntity<Map<String, Long>> getDashboardSummary() {
+
+    return ResponseEntity.ok(dashboardService.getDashboardSummary());
+}
 }
