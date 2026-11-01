@@ -76,24 +76,26 @@ public ResponseEntity<?> getVehicleById(@PathVariable UUID id) {
 
     // Update a vehicle
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateVehicle(
-            @PathVariable UUID id,
-            @RequestBody Vehicle vehicle) {
+public ResponseEntity<String> updateVehicle(
+        @PathVariable UUID id,
+        @RequestBody Vehicle updatedVehicle) {
 
-        try {
-            boolean updated = vehicleService.updateVehicle(id, vehicle).isPresent();
+    try {
+        Optional<Vehicle> vehicle = vehicleService.updateVehicle(id, updatedVehicle);
 
-            if (updated) {
-                return ResponseEntity.ok("Vehicle updated successfully");
-            }
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehicle not found. Update failed");
-
-        } catch (IllegalStateException | IllegalArgumentException e) {
-
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        if (vehicle.isPresent()) {
+            return ResponseEntity.ok("Vehicle updated successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehicle not found");
         }
+
+    } catch (IllegalStateException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
+}
 
     // Delete a vehicle
     @DeleteMapping("/{id}")
